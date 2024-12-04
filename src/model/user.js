@@ -38,4 +38,4 @@ const User = {
   },
 };
 
-export default User; // Sử dụng export default để export object User
+export default User;
