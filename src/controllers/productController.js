@@ -1,6 +1,6 @@
 // src/controllers/productController.js
 
-import ProductService from "../service/productService.js"; // Import product service
+import ProductService from "../service/product/productService.js"; // Import product service
 
 const ProductController = {
   getAllProducts: async (req, res) => {

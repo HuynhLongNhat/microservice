@@ -1,6 +1,6 @@
 // services/authService.js
 import bcrypt from "bcryptjs";
-import userModel from "../model/user.js";
+import userModel from "../../models/user.js";
 
 const login = async (UserName, Password) => {
   try {

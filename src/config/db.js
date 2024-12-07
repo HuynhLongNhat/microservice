@@ -1,18 +1,18 @@
 import mysql from "mysql2";
+import dotenv from "dotenv";
+dotenv.config();
 
-const dbConnect = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "admin",
-  database: "th2",
+const pool = mysql.createPool({
+  // Sử dụng createPool
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
-dbConnect.connect((err) => {
-  if (err) {
-    console.error("Error connecting to database:", err);
-    return;
-  }
-  console.log("Connected to database!");
-});
+const connectDB = pool.promise(); // Sử dụng pool.promise()
 
-export default dbConnect;
+export default connectDB;

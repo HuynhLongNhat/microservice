@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import ProductController from "../controllers/productController.js";
-import { authenticateToken } from "../middleware/authMiddleware.js";
+import { authenticateToken } from "../middlewares/authMiddleware.js";
 
 router.use(authenticateToken);
 

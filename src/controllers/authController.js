@@ -1,6 +1,6 @@
 // controllers/authController.js
 import jwt from "jsonwebtoken";
-import authService from "../service/authService.js";
+import authService from "../service/auth/authService.js";
 
 const JWT_SECRET = "your_jwt_secret_key";
 
