@@ -1,22 +1,23 @@
-// middlewares/authMiddleware.js
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = "longnhat";
-
-const authenticateToken = (req, res, next) => {
+export const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
-  if (token == null) return res.sendStatus(401);
+  if (!token) {
+    return res
+      .status(401)
+      .json({ EM: "Chưa xác thực người dùng", EC: -1, DT: null });
+  }
 
-  jwt.verify(token, JWT_SECRET, (err, user) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
-      console.error("JWT Verification Error:", err.message);
-      return res.sendStatus(403);
+      return res
+        .status(403)
+        .json({ EM: "Token không hợp lệ", EC: -1, DT: null });
     }
-    req.user = user;
+
+    req.user = user; // Gán thông tin user vào request
     next();
   });
 };
-
-export { authenticateToken };

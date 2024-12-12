@@ -1,14 +1,31 @@
+// routes/productRoutes.js
 import express from "express";
-const router = express.Router();
-import ProductController from "../controllers/productController.js";
+import productController from "../controller/productController.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 
-router.use(authenticateToken);
+const router = express.Router();
 
-router.get("/", ProductController.getAllProducts);
-router.get("/:id", ProductController.getProductById);
-router.post("/", ProductController.createProduct);
-router.put("/:id", ProductController.updateProduct);
-router.delete("/:id", ProductController.deleteProduct);
+/**
+ * Routes liên quan đến sản phẩm
+ */
+const initProductRoutes = (app) => {
+  // Lấy danh sách tất cả sản phẩm
+  router.get("/", authenticateToken, productController.getAllProducts);
 
-export default router;
+  // Lấy thông tin chi tiết một sản phẩm
+  router.get("/:id", authenticateToken, productController.getProductById);
+
+  // Thêm một sản phẩm mới
+  router.post("/", authenticateToken, productController.createProduct);
+
+  // Cập nhật thông tin sản phẩm
+  router.put("/:id", authenticateToken, productController.updateProduct);
+
+  // Xóa một sản phẩm
+  router.delete("/:id", authenticateToken, productController.deleteProduct);
+
+  // Gắn router vào app
+  return app.use("/products", router);
+};
+
+export default initProductRoutes;
