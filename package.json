@@ -4,10 +4,11 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"npm run start:auth\" \"npm run start:product\"  \"npm run start:order\"",
+    "start": "concurrently \"npm run start:auth\" \"npm run start:product\"  \"npm run start:order\"  \"npm run start:report\"",
     "start:auth": "npx nodemon --exec babel-node src/service/auth/index.js",
     "start:product": "npx nodemon --exec babel-node src/service/product/index.js",
-    "start:order": "npx nodemon --exec babel-node src/service/order/index.js"
+    "start:order": "npx nodemon --exec babel-node src/service/order/index.js",
+    "start:report": "npx nodemon --exec babel-node src/service/reportProduct/index.js"
   },
   "author": "Long Nhat",
   "license": "ISC",

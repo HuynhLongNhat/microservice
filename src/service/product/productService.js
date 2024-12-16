@@ -1,11 +1,11 @@
 import db from "../../models/index.js";
 
 const getAllProducts = async () => {
-  return await db.Product.findAll();
+  return await db.products.findAll();
 };
 
 const getProductById = async (id) => {
-  return await db.Product.findByPk(id);
+  return await db.products.findByPk(id);
 };
 
 const createProduct = async (productData) => {
@@ -15,7 +15,7 @@ const createProduct = async (productData) => {
     throw new Error("Missing required fields: name, price, or quantity");
   }
 
-  return await db.Product.create({
+  return await db.products.create({
     name,
     description,
     price,
@@ -25,7 +25,7 @@ const createProduct = async (productData) => {
 
 const updateProduct = async (id, productData) => {
   console.log("Update Product :", id, productData);
-  const product = await db.Product.findByPk(id);
+  const product = await db.products.findByPk(id);
   if (!product) {
     return null;
   }
@@ -35,7 +35,7 @@ const updateProduct = async (id, productData) => {
 };
 
 const deleteProduct = async (id) => {
-  const product = await db.Product.findByPk(id);
+  const product = await db.products.findByPk(id);
   if (!product) {
     return null;
   }

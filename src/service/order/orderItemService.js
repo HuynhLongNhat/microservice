@@ -3,15 +3,15 @@ import db from "../../models"; // Import các model cần thiết
 // Lấy danh sách tất cả mặt hàng trong đơn hàng
 const getAllOrderItems = async () => {
   try {
-    const orderItems = await db.OtherItem.findAll({
+    const orderItems = await db.otheritems.findAll({
       include: [
         {
-          model: db.Product,
+          model: db.products,
           as: "product", // Alias phải khớp với định nghĩa trong model
           attributes: ["id", "name", "price"], // Chỉ lấy các trường cần thiết
         },
         {
-          model: db.Order,
+          model: db.orders,
           as: "order", // Alias phải khớp với định nghĩa trong model
           attributes: ["id", "customer_name", "status"],
         },
@@ -30,7 +30,7 @@ const getAllOrderItems = async () => {
 const getOrderItemById = async (id) => {
   try {
     // Tìm mặt hàng theo ID
-    const orderItem = await db.OtherItem.findOne({ where: { id: id } });
+    const orderItem = await db.otheritems.findOne({ where: { id: id } });
     if (!orderItem) {
       throw new Error("Mặt hàng không tồn tại");
     }
@@ -40,7 +40,6 @@ const getOrderItemById = async (id) => {
   }
 };
 
-// Tạo mặt hàng mới
 const createOrderItem = async (orderItemData) => {
   console.log(orderItemData);
   try {
@@ -55,7 +54,6 @@ const createOrderItem = async (orderItemData) => {
       throw new Error("Dữ liệu mặt hàng không hợp lệ");
     }
 
-    // Kiểm tra xem sản phẩm có tồn tại trong cơ sở dữ liệu không
     const product = await db.Product.findOne({
       where: { id: orderItemData.product_id },
     });
@@ -63,13 +61,12 @@ const createOrderItem = async (orderItemData) => {
       throw new Error("Sản phẩm không tồn tại");
     }
 
-    // Kiểm tra nếu số lượng mặt hàng là hợp lệ
     if (orderItemData.quantity <= 0) {
       throw new Error("Số lượng mặt hàng không hợp lệ");
     }
 
     // Tạo mặt hàng mới và lưu vào cơ sở dữ liệu
-    const newOrderItem = await db.OtherItem.create(orderItemData);
+    const newOrderItem = await db.otheritems.create(orderItemData);
 
     return newOrderItem;
   } catch (error) {
@@ -82,7 +79,7 @@ const createOrderItem = async (orderItemData) => {
 const updateOrderItem = async (id, orderItemData) => {
   try {
     // Tìm mặt hàng theo ID
-    const orderItem = await db.OtherItem.findByPk(id);
+    const orderItem = await db.otheritems.findByPk(id);
     if (!orderItem) {
       throw new Error("Mặt hàng không tồn tại");
     }
@@ -99,7 +96,7 @@ const updateOrderItem = async (id, orderItemData) => {
 // Xóa mặt hàng
 const deleteOrderItem = async (id) => {
   try {
-    const orderItem = await db.OtherItem.findByPk(id);
+    const orderItem = await db.otheritems.findByPk(id);
     if (!orderItem) {
       throw new Error("Mặt hàng không tồn tại");
     }

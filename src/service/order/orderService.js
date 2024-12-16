@@ -3,7 +3,7 @@ import db from "../../models"; // Assuming you have models Order and Product
 // Lấy danh sách tất cả đơn hàng
 const getAllOrders = async () => {
   try {
-    const orders = await db.Order.findAll();
+    const orders = await db.orders.findAll();
     return orders;
   } catch (error) {
     throw new Error("Không thể lấy danh sách đơn hàng");
@@ -13,7 +13,7 @@ const getAllOrders = async () => {
 // Lấy thông tin chi tiết một đơn hàng
 const getOrderById = async (id) => {
   try {
-    const order = await db.Order.findByPk(id);
+    const order = await db.orders.findByPk(id);
     if (!order) {
       throw new Error("Không tìm thấy đơn hàng");
     }
@@ -37,7 +37,7 @@ const createOrder = async (orderData) => {
     }
 
     // Tạo đơn hàng mới trong cơ sở dữ liệu
-    const newOrder = await db.Order.create({
+    const newOrder = await db.orders.create({
       customer_name: orderData.customer_name,
       customer_email: orderData.customer_email,
       total_amount: orderData.total_amount,
@@ -54,7 +54,7 @@ const createOrder = async (orderData) => {
 // Cập nhật trạng thái đơn hàng
 const updateOrderStatus = async (id, status) => {
   try {
-    const order = await db.Order.findByPk(id);
+    const order = await db.orders.findByPk(id);
     if (!order) {
       return null; // Đơn hàng không tồn tại
     }
@@ -70,7 +70,7 @@ const updateOrderStatus = async (id, status) => {
 // Xóa đơn hàng
 const deleteOrder = async (id) => {
   try {
-    const order = await db.Order.findByPk(id);
+    const order = await db.orders.findByPk(id);
     if (!order) {
       return null; // Đơn hàng không tồn tại
     }

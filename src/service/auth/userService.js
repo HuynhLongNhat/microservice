@@ -15,13 +15,13 @@ const registerUser = async (UserName, Password) => {
 
   try {
     // Kiểm tra nếu email đã tồn tại trong hệ thống
-    const existingUser = await db.User.findOne({ where: { UserName } });
+    const existingUser = await db.users.findOne({ where: { UserName } });
     if (existingUser) {
       throw new Error("Tên người dùng  đã được đăng ký");
     }
 
     // Tạo người dùng mới trong database
-    const newUser = await db.User.create({
+    const newUser = await db.users.create({
       UserName,
 
       Password: hashPassword,
@@ -37,7 +37,7 @@ const registerUser = async (UserName, Password) => {
 
 // Đăng nhập và tạo JWT
 const loginUser = async (UserName, Password) => {
-  const user = await db.User.findOne({
+  const user = await db.users.findOne({
     where: { UserName },
   });
 
@@ -61,7 +61,7 @@ const loginUser = async (UserName, Password) => {
 
 // Lấy thông tin người dùng
 const getUserInfo = async (id) => {
-  const user = await db.User.findOne({ where: { id } });
+  const user = await db.users.findOne({ where: { id } });
   if (!user) throw new Error("Không tìm thấy người dùng");
   return user;
 };
